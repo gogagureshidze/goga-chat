@@ -15,6 +15,8 @@ import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const Input = () => {
+  const [loading, setLoading] = useState(false)
+
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
 

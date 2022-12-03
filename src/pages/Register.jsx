@@ -27,10 +27,8 @@ const Register = () => {
       const date = new Date().getTime();
       const storageRef = ref(storage, `${displayName + date}`);
 
-      await uploadBytesResumable(storageRef, file)
-      .then(() => {
-        getDownloadURL(storageRef)
-        .then(async (downloadURL) => {
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
           try {
             //Update profile
             await updateProfile(res.user, {
@@ -48,7 +46,6 @@ const Register = () => {
             //create empty user chats on firestore
             await setDoc(doc(db, "userChats", res.user.uid), {});
             navigate("/");
-            
           } catch (err) {
             console.log(err);
             setErr(true);
@@ -65,7 +62,7 @@ const Register = () => {
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Lama Chat</span>
+        <span className="logo">Goga Chat</span>
         <span className="title">Register</span>
         <form onSubmit={handleSubmit}>
           <input required type="text" placeholder="display name" />
@@ -78,13 +75,13 @@ const Register = () => {
             id="file"
             accept=".png, .jpeg, .jpg"
           />
-          <label required htmlFor="file">
+          <label htmlFor="file">
             <img src={Add} alt="" />
             <span>Add an avatar</span>
           </label>
-          <button disabled={loading}>Sign up</button>
+          <button type="submit" disabled={loading}>Sign up</button>
           {loading && "Loading please wait..."}
-          {err && <span>Something went wrong</span>}
+          {err && "Something went wrong"}
         </form>
         <p>
           You do have an account? <Link to="/login">Login</Link>
